@@ -88,13 +88,18 @@ public class CipherGenerator : MonoBehaviour
         return inputStr == originalSentence;
     }
 
-    public GameObject charPrefab, spacePrefab;
+    public GameObject charPrefab, spacePrefab, winPanel;
+    public bool win = false;
     public List<Text> inputs = new List<Text>();
     private string originalSentence;
 
     private void Start()
     {
-        string path = Application.dataPath + "/proverbs.txt"; 
+        Time.timeScale = 1f;
+        win = false;
+        winPanel.SetActive(false);
+
+        string path = Application.dataPath + "/proverbs.txt";
         sentences = File.ReadAllLines(path);
 
         //Keys keys = new Keys { a = 1, b = 25 };
@@ -102,16 +107,19 @@ public class CipherGenerator : MonoBehaviour
 
         Keys keys = GenerateParameters();
         originalSentence = RandomSentence();
-        
+
         string sentence = GenerateEncryptedSentence(originalSentence, keys, alphabetLength);
         GenerateUI(sentence);
     }
 
     private void Update()
     {
-        if (Check(originalSentence))
+        if (Check(originalSentence) && !win)
         {
-            Debug.Log("WIN");
+            win = true;
+            winPanel.SetActive(true);
+            winPanel.GetComponentInChildren<Text>().text = originalSentence;
+            Time.timeScale = 0;
         }
     }
 }
