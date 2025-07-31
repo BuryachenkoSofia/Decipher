@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,6 +10,14 @@ public class CipherGenerator : MonoBehaviour
 
     private const int alphabetLength = 26;
     private int[] relativelyPrime = { 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25 };
+
+    private string[] sentences;
+
+    private string RandomSentence()
+    {
+        int rand = Random.Range(0, sentences.Length);
+        return sentences[rand];
+    }
 
     public Keys GenerateParameters()
     {
@@ -81,12 +90,19 @@ public class CipherGenerator : MonoBehaviour
 
     public GameObject charPrefab, spacePrefab;
     public List<Text> inputs = new List<Text>();
-    private string originalSentence = "Hello friends";
+    private string originalSentence;
 
     private void Start()
     {
-        //Keys keys = GenerateParameters();
-        Keys keys = new Keys { a = 1, b = 25 };
+        string path = Application.dataPath + "/proverbs.txt"; 
+        sentences = File.ReadAllLines(path);
+
+        //Keys keys = new Keys { a = 1, b = 25 };
+        //originalSentence="hello";
+
+        Keys keys = GenerateParameters();
+        originalSentence = RandomSentence();
+        
         string sentence = GenerateEncryptedSentence(originalSentence, keys, alphabetLength);
         GenerateUI(sentence);
     }
