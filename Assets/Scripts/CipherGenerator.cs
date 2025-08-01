@@ -110,6 +110,7 @@ public class CipherGenerator : MonoBehaviour
     public GameObject charPrefab, spacePrefab, winPanel;
     public bool win = false;
     public List<Text> inputs = new List<Text>();
+    public Text hintText;
     private string originalSentence, encryptedSentence;
 
     private void Start()
@@ -132,6 +133,8 @@ public class CipherGenerator : MonoBehaviour
 
         encryptedSentence = GenerateEncryptedSentence(originalSentence, keys, alphabetLength);
         GenerateUI(encryptedSentence);
+
+        hintText.text = $"The letter '{originalSentence[0]}' becomes '{encryptedSentence[0]}' in the encrypted sentence";
     }
 
     private void Update()
