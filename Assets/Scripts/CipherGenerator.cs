@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
@@ -15,15 +16,29 @@ public class CipherGenerator : MonoBehaviour
 
     private string RandomSentence()
     {
-        int rand = Random.Range(0, sentences.Length);
+        int rand = UnityEngine.Random.Range(0, sentences.Length);
         return sentences[rand];
     }
 
-    public Keys GenerateParameters()
+    public Keys GenerateParameters(int level)
     {
-        int randInt = Random.Range(0, relativelyPrime.Length);
-        int a = relativelyPrime[randInt];
-        int b = Random.Range(0, alphabetLength);
+        int a;
+        if (level == 0)
+        {
+            a = 1;
+        }
+        else if (level == 1)
+        {
+            int randInt = UnityEngine.Random.Range(0, 3);
+            a = relativelyPrime[randInt];
+        }
+        else
+        {
+            int randInt = UnityEngine.Random.Range(0, relativelyPrime.Length);
+            a = relativelyPrime[randInt];
+
+        }
+        int b = UnityEngine.Random.Range(1, alphabetLength);
         return new Keys { a = a, b = b };
     }
 
@@ -41,7 +56,7 @@ public class CipherGenerator : MonoBehaviour
         {
             result += E(i, keys, alphabetLength);
         }
-        Debug.Log(result + " a=" + keys.a + " b=" + keys.b);
+        Debug.Log(originalSentence + " " + result + " a=" + keys.a + " b=" + keys.b);
         return result;
     }
 
@@ -69,8 +84,12 @@ public class CipherGenerator : MonoBehaviour
 
                 inputs.Add(obj.GetComponentInChildren<InputField>().GetComponentInChildren<Text>());
             }
-            Instantiate(spacePrefab, this.gameObject.transform);
-            currentLength++;
+            if (currentLength != maxLength)
+            {
+                Instantiate(spacePrefab, this.gameObject.transform);
+                currentLength++;
+            }
+
         }
     }
 
@@ -91,7 +110,7 @@ public class CipherGenerator : MonoBehaviour
     public GameObject charPrefab, spacePrefab, winPanel;
     public bool win = false;
     public List<Text> inputs = new List<Text>();
-    private string originalSentence;
+    private string originalSentence, encryptedSentence;
 
     private void Start()
     {
@@ -99,17 +118,20 @@ public class CipherGenerator : MonoBehaviour
         win = false;
         winPanel.SetActive(false);
 
-        string path = Application.dataPath + "/proverbs.txt";
-        sentences = File.ReadAllLines(path);
+        TextAsset textFile = Resources.Load<TextAsset>("proverbs");
+        sentences = textFile.text.Split(new[] { '\n' }, System.StringSplitOptions.RemoveEmptyEntries);
+        for (int i = 0; i < sentences.Length; i++) sentences[i] = sentences[i].Trim();
+        Array.Sort(sentences, (a, b) => a.Length.CompareTo(b.Length));
 
         //Keys keys = new Keys { a = 1, b = 25 };
         //originalSentence="hello";
 
-        Keys keys = GenerateParameters();
+        Keys keys = GenerateParameters(PlayerPrefs.GetInt("level"));
+        Debug.Log(PlayerPrefs.GetInt("level"));
         originalSentence = RandomSentence();
 
-        string sentence = GenerateEncryptedSentence(originalSentence, keys, alphabetLength);
-        GenerateUI(sentence);
+        encryptedSentence = GenerateEncryptedSentence(originalSentence, keys, alphabetLength);
+        GenerateUI(encryptedSentence);
     }
 
     private void Update()
@@ -118,7 +140,7 @@ public class CipherGenerator : MonoBehaviour
         {
             win = true;
             winPanel.SetActive(true);
-            winPanel.GetComponentInChildren<Text>().text = originalSentence;
+            winPanel.GetComponentInChildren<Text>().text = encryptedSentence.ToUpper() + "\n" + originalSentence.ToUpper();
             Time.timeScale = 0;
         }
     }
