@@ -17,4 +17,8 @@ public class MenuScript : MonoBehaviour
     {
         Application.Quit();
     }
+    public void TryAgain()
+    {
+        SceneManager.LoadScene(1);
+    }
 }

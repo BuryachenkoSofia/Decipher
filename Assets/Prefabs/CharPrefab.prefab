@@ -91,6 +91,7 @@ GameObject:
   - component: {fileID: 1367364824676915459}
   - component: {fileID: 8664458075786832870}
   - component: {fileID: 7959135960176801904}
+  - component: {fileID: 8886810631768966074}
   m_Layer: 5
   m_Name: InputField (Legacy)
   m_TagString: Untagged
@@ -224,6 +225,19 @@ MonoBehaviour:
   m_CaretWidth: 1
   m_ReadOnly: 0
   m_ShouldActivateOnSelect: 1
+--- !u!114 &8886810631768966074
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020291232580003105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b301c48128663fe47941718c1697ff64, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioPrefab: {fileID: 1505719460184155172, guid: 76bd41591ecded9469e58de08af3ac25, type: 3}
 --- !u!1 &6033503023382207711
 GameObject:
   m_ObjectHideFlags: 0
