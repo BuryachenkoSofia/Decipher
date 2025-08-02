@@ -12,6 +12,7 @@ public class ButtonSound : MonoBehaviour
             AudioSource audioSource = audioInstance.GetComponent<AudioSource>();
             if (audioSource != null)
             {
+                audioSource.volume = PlayerPrefs.GetFloat("volume");
                 audioSource.Play();
                 Destroy(audioInstance, audioSource.clip.length);
             }

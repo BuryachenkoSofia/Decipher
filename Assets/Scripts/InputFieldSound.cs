@@ -13,6 +13,7 @@ public class InputFieldSound : MonoBehaviour, ISelectHandler
             AudioSource audioSource = audioInstance.GetComponent<AudioSource>();
             if (audioSource != null)
             {
+                audioSource.volume = PlayerPrefs.GetFloat("volume");
                 audioSource.Play();
                 Destroy(audioInstance, audioSource.clip.length);
             }
