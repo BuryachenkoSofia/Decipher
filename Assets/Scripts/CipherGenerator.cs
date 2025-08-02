@@ -83,6 +83,7 @@ public class CipherGenerator : MonoBehaviour
                 currentLength++;
 
                 inputs.Add(obj.GetComponentInChildren<InputField>().GetComponentInChildren<Text>());
+                inputFields.Add(obj.GetComponentInChildren<InputField>());
             }
             if (currentLength != maxLength)
             {
@@ -110,6 +111,7 @@ public class CipherGenerator : MonoBehaviour
     public GameObject charPrefab, spacePrefab, winPanel;
     public bool win = false;
     public List<Text> inputs = new List<Text>();
+    public List<InputField> inputFields  = new List<InputField>();
     public Text hintText;
     private string originalSentence, encryptedSentence;
 
@@ -128,7 +130,6 @@ public class CipherGenerator : MonoBehaviour
         //originalSentence="hello";
 
         Keys keys = GenerateParameters(PlayerPrefs.GetInt("level"));
-        Debug.Log(PlayerPrefs.GetInt("level"));
         originalSentence = RandomSentence();
 
         encryptedSentence = GenerateEncryptedSentence(originalSentence, keys, alphabetLength);

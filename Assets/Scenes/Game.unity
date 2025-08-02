@@ -3099,6 +3099,7 @@ GameObject:
   - component: {fileID: 1482421347}
   - component: {fileID: 1482421346}
   - component: {fileID: 1482421349}
+  - component: {fileID: 1482421350}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -3179,6 +3180,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f42445ffe40ce484ca0c5ebf95b430af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1482421350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482421345}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee027db14a269094990aa0c9c2f737e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cipherGenerator: {fileID: 1610310106}
 --- !u!1 &1522472550
 GameObject:
   m_ObjectHideFlags: 0
@@ -3336,6 +3350,7 @@ MonoBehaviour:
   winPanel: {fileID: 1037909877}
   win: 0
   inputs: []
+  inputFields: []
   hintText: {fileID: 1327490253}
 --- !u!1 &1758569422
 GameObject:
